@@ -46,8 +46,6 @@ function test2()
         local a = sum_written_in_c(1, 2, 3)
     end
 
-    local StartTime = os.clock()
-
     local EndTime = os.clock()
 
     local ExeTime = EndTime - StartTime

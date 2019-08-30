@@ -111,7 +111,10 @@ namespace PerfTest
                 {
                     strings.Add("hello world");
                 }
+                //if (i == 1)
+                //    Console.ReadKey();
             }
+            
         }
 
         static void Main(string[] args)
@@ -125,6 +128,7 @@ namespace PerfTest
             var iteratorTime = 100;
 
             // Test 1
+
             var test1TimeList = new List<TimeSpan>();
             for (int i = 0; i < iteratorTime; i++)
             {
