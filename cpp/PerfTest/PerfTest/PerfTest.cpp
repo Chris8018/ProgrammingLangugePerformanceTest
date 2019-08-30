@@ -4,16 +4,42 @@
 #include "pch.h"
 #include <iostream>
 
+#include <windows.h>
+
+#include <stdio.h>
+#include <string>
+#include <vector>
+
 #include <chrono>
 #include <ctime>
 
+#include <profileapi.h>
 
-int main()
+// Import DLL C Func here
+//typedef int(__cdecl *MYPROC)();
+typedef int(__cdecl *MYPROC)(double, double, double);
+
+static double reduce(double* n, std::vector<double> list)
 {
-    //std::cout << "Hello World!\n";
-    /*auto start = std::chrono::system_clock::now();*/
+    for (int i = 0; i < list.size(); i++)
+    {
+        *n += list.at(i);
+    }
+    return *n;
+}
 
-    // Some computation here
+static double test1()
+{
+    LARGE_INTEGER frequency;        // ticks per second
+    LARGE_INTEGER t1, t2;           // ticks
+    //double elapsedTime;
+
+    // get ticks per second
+    QueryPerformanceFrequency(&frequency);
+
+    // start timer
+    QueryPerformanceCounter(&t1);
+
     for (int i = 0; i < 100000; ++i)
     {
         for (int j = 0; j < 100; ++j)
@@ -42,22 +68,120 @@ int main()
         }
     }
 
-    /*auto end = std::chrono::system_clock::now();
+    // stop timer
+    QueryPerformanceCounter(&t2);
 
-    std::chrono::duration<double> elapsed_seconds = end - start;
-    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+    // compute and print the elapsed time in millisec
+    //elapsedTime = (t2.QuadPart - t1.QuadPart) * 1.0 / frequency.QuadPart;
+    //std::cout << elapsedTime;
 
-    std::cout << "finished computation at " << std::ctime(&end_time)
-        << "elapsed time: " << elapsed_seconds.count() << "s\n";*/
+    return (t2.QuadPart - t1.QuadPart) * 1.0 / frequency.QuadPart;;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+static double test2()
+{
+    LARGE_INTEGER frequency;        // ticks per second
+    LARGE_INTEGER t1, t2;           // ticks
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+    // get ticks per second
+    QueryPerformanceFrequency(&frequency);
+
+    // start timer
+    QueryPerformanceCounter(&t1);
+
+    HINSTANCE hinstLib;
+    MYPROC ProcSum;
+    BOOL fFreeResult, fRunTimeLinkSuccess = FALSE;
+
+    // Get a handle to the DLL module.
+    hinstLib = LoadLibrary(TEXT("CLib.dll"));
+
+    if (hinstLib != NULL) // If the handle is valid, try to get the function address.
+    {
+        ProcSum = (MYPROC)GetProcAddress(hinstLib, "sum_written_in_c");
+
+        if (NULL != ProcSum) // If the function address is valid, call the function.
+        {
+            fRunTimeLinkSuccess = TRUE;
+            for (int i = 0; i < 100000000; ++i)
+                int a = (ProcSum)(1, 2, 3);
+        }
+        
+
+        fFreeResult = FreeLibrary(hinstLib); // Free the DLL module.
+    }
+
+    if (!fRunTimeLinkSuccess) // If unable to call the DLL function, use an alternative.
+        printf("Fail Test 2: Not loading CLib.dll");
+
+    // stop timer
+    QueryPerformanceCounter(&t2);
+
+    return (t2.QuadPart - t1.QuadPart) * 1.0 / frequency.QuadPart;
+}
+
+static void test3()
+{
+    for (int i = 0; i < 2; ++i)
+    {
+        std::vector<int> ints;
+        for (int j = 1; j < 100000; ++j)
+        {
+            ints.push_back(1);
+        }
+        std::vector<float> floats;
+        for (int j = 1; j < 100000; ++j)
+        {
+            floats.push_back(1.1);
+        }
+        std::vector<std::string> strings;
+        for (int j = 1; j < 100000; ++j)
+        {
+            strings.push_back("hello world");
+        }
+    }
+
+    //return 0;
+}
+
+int main()
+{
+    //double* elapsedTime = 0;
+    const int iteratorTime = 100;
+
+    // Test 1
+
+    std::vector<double> timeList1;
+
+    for (int i = 0; i < iteratorTime; i++)
+    {
+        timeList1.push_back(test1());
+    }
+
+    //double test1Result = 0.0;
+    double elapsedTime1Total = 0.0;
+
+    reduce(&elapsedTime1Total, timeList1);
+
+    std::cout << "Test 1 elapsed time: " << elapsedTime1Total / (double) iteratorTime << "s\n";    
+
+    // Test 2
+
+    //test2();
+
+    std::vector<double> timeList2;
+
+    for (int i = 0; i < iteratorTime; i++)
+    {
+        timeList2.push_back(test2());
+    }
+
+    //double test1Result = 0.0;
+    double elapsedTime2Total = 0.0;
+
+    reduce(&elapsedTime2Total, timeList2);
+
+    std::cout << "Test 2 elapsed time: " << elapsedTime2Total / (double) iteratorTime << "s\n";
+
+    return 0;
+}
