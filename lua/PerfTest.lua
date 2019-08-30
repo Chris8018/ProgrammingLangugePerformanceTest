@@ -87,6 +87,7 @@ Reduce = function (n, list)
     for key, value in pairs(list) do
         n = n + value
     end
+    return n
 end
 
 -- Run test 1
@@ -97,7 +98,9 @@ for i = 1, IteratorTime do
     TimeList1[i] = test1()
 end
 
-print(Reduce(0, TimeList1) / IteratorTime)
+ElapsedTime1 = Reduce(0, TimeList1) / IteratorTime
+
+print("Test 1 elapsed time: " .. ElapsedTime1 .. "s")
 
 -- Run test 2
 -- test2()
@@ -108,4 +111,6 @@ for i = 1, IteratorTime do
     TimeList2[i] = test2()
 end
 
-print(Reduce(0, TimeList2) / IteratorTime)
+ElapsedTime2 = Reduce(0, TimeList2) / IteratorTime
+
+print("Test 2 elapsed time: " .. ElapsedTime2 .. "s")

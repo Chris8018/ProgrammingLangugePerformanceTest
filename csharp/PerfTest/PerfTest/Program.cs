@@ -139,7 +139,7 @@ namespace PerfTest
                 .Select(time => time.TotalSeconds)
                 .Aggregate((t1, t2) => t1 + t2) / iteratorTime;
 
-            Console.WriteLine("Test 1 elapsed time: {0}", test1ElapsedTime);
+            Console.WriteLine("Test 1 elapsed time: {0}s", test1ElapsedTime);
 
             // Test 2
 
@@ -153,7 +153,7 @@ namespace PerfTest
                 .Select(time => time.TotalSeconds)
                 .Aggregate((t1, t2) => t1 + t2) / iteratorTime;
 
-            Console.WriteLine("Test 2 elapsed time: {0}", test2ElapsedTime);
+            Console.WriteLine("Test 2 elapsed time: {0}s", test2ElapsedTime);
 
             // Test 3
 
