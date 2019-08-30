@@ -32,7 +32,8 @@ function test1()
 
     local ExeTime = EndTime - StartTime
 
-    print("Test 1 eplapsed time: " .. ExeTime)
+    -- print("Test 1 eplapsed time: " .. ExeTime)
+    return ExeTime
 end
 
 -- Test 2: Execution time when calling C Function
@@ -50,7 +51,8 @@ function test2()
 
     local ExeTime = EndTime - StartTime
 
-    print("Test 2 eplapsed time: " .. ExeTime)
+    -- print("Test 2 eplapsed time: " .. ExeTime)
+    return ExeTime
 end
 
 -- Test 3: Memory test
@@ -78,8 +80,32 @@ end
 -- Run test 3
 -- test3()
 
+
+IteratorTime = 100
+
+Reduce = function (n, list)
+    for key, value in pairs(list) do
+        n = n + value
+    end
+end
+
 -- Run test 1
-test1()
+-- test1()
+TimeList1 = {}
+
+for i = 1, IteratorTime do
+    TimeList1[i] = test1()
+end
+
+print(Reduce(0, TimeList1) / IteratorTime)
 
 -- Run test 2
-test2()
+-- test2()
+
+TimeList2 = {}
+
+for i = 1, IteratorTime do
+    TimeList2[i] = test2()
+end
+
+print(Reduce(0, TimeList2) / IteratorTime)

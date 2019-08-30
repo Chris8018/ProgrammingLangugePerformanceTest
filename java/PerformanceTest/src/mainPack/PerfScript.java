@@ -38,7 +38,7 @@ public class PerfScript {
 		
 		stopTime = System.currentTimeMillis();
 		
-		return startTime - stopTime;
+		return stopTime - startTime;
 	}
 	
 	public static long test2 () {
@@ -53,7 +53,7 @@ public class PerfScript {
 		
 		stopTime = System.currentTimeMillis();
 		
-		return startTime - stopTime;
+		return stopTime - startTime;
 	}
 	
 	public static void test3 () {
@@ -114,7 +114,7 @@ public class PerfScript {
 		for (int i = 0; i < iteratorTime; i++) {
 			test1TimeList.add(test1());
 		}
-		float test1ElapsedTime = test1TimeList.stream().reduce(0L, (t1, t2) -> t1 + t2) / 1000f;
+		float test1ElapsedTime = test1TimeList.stream().reduce(0L, (t1, t2) -> t1 + t2) / iteratorTime / 1000f;
 		System.out.println("Test 1 execution time: " + test1ElapsedTime + "s");
 		
 		// Test 2
@@ -132,9 +132,9 @@ public class PerfScript {
 //		System.out.println("Test 2 execution time: " + elapsedTime/1000f + "s");
 		List<Long> test2TimeList = new ArrayList<>();
 		for (int i = 0; i < iteratorTime; i++) {
-			test2TimeList.add(test1());
+			test2TimeList.add(test2());
 		}
-		float test2ElapsedTime = test1TimeList.stream().reduce(0L, (t1, t2) -> t1 + t2) / 1000f;
+		float test2ElapsedTime = test2TimeList.stream().reduce(0L, (t1, t2) -> t1 + t2) / iteratorTime / 1000f;
 		System.out.println("Test 2 execution time: " + test2ElapsedTime + "s");
 //		
 //		System.out.print("stop");
