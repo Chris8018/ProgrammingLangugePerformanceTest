@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Diagnostics;
+
 using System.Runtime.InteropServices;
 
 namespace PerfTest
@@ -29,8 +31,10 @@ namespace PerfTest
         /// <summary>
         /// Test 1 to test execution time
         /// </summary>
-        public static void test1()
+        public static TimeSpan test1()
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            
             for (int i = 0; i < 100_000; ++i)
             {
                 for (int j = 0; j < 100; ++j)
@@ -60,18 +64,28 @@ namespace PerfTest
                     String b = a + "world";
                 }
             }
+
+            stopwatch.Stop();
+            //Console.WriteLine("Test 1 eplased time: {0} s", stopwatch.Elapsed.TotalSeconds);
+            return stopwatch.Elapsed;
         }
 
         /// <summary>
         /// Test 2 to test execution time when call C-Fun
         /// </summary>
-        public static void test2()
+        public static TimeSpan test2()
         {
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
             //		System.out.println("Message: " + CFun.isCFun());
             for (int i = 1; i < 100_000_000; ++i)
             {
                 int a = sum_written_in_c(1, 2, 3);
             }
+
+            stopwatch.Stop();
+            //Console.WriteLine("Test 2 eplased time: {0} s", stopwatch.Elapsed.TotalSeconds);
+            return stopwatch.Elapsed;
         }
 
         /// <summary>
@@ -108,18 +122,39 @@ namespace PerfTest
             //Console.WriteLine("Hello");
             //Console.ReadKey();
 
-            // Test 1
+            var iteratorTime = 100;
 
-            //test1();
+            // Test 1
+            var test1TimeList = new List<TimeSpan>();
+            for (int i = 0; i < iteratorTime; i++)
+            {
+                test1TimeList.Add(test1());
+            }
+
+            var test1ElapsedTime = test1TimeList
+                .Select(time => time.TotalSeconds)
+                .Aggregate((t1, t2) => t1 + t2) / iteratorTime;
+
+            Console.WriteLine("Test 1 elapsed time: {0}", test1ElapsedTime);
 
             // Test 2
 
-            test2();
+            var test2TimeList = new List<TimeSpan>();
+            for (int i = 0; i < iteratorTime; i++)
+            {
+                test2TimeList.Add(test2());
+            }
+
+            var test2ElapsedTime = test2TimeList
+                .Select(time => time.TotalSeconds)
+                .Aggregate((t1, t2) => t1 + t2) / iteratorTime;
+
+            Console.WriteLine("Test 2 elapsed time: {0}", test2ElapsedTime);
 
             // Test 3
 
             //test3();
-            Console.WriteLine("Done");
+            //Console.WriteLine("Done");
         }
     }
 }

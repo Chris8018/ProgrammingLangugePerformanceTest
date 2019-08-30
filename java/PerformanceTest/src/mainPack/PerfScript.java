@@ -7,7 +7,11 @@ import mainPack.CFun;
 
 public class PerfScript {
     
-	public static void test1() {
+	public static long test1() {
+		long startTime;
+		long stopTime;
+		startTime = System.currentTimeMillis();
+		
 		for (int i = 0; i < 100_000; ++i) {
 			for (int j = 0; j < 100; ++j) {
 				int a = 5 * 5;
@@ -31,13 +35,25 @@ public class PerfScript {
 				String b = a + "world";
 			}
 		}
+		
+		stopTime = System.currentTimeMillis();
+		
+		return startTime - stopTime;
 	}
 	
-	public static void test2 () {
+	public static long test2 () {
 //		System.out.println("Message: " + CFun.isCFun());
+		long startTime;
+		long stopTime;
+		startTime = System.currentTimeMillis();
+		
 		for (int i = 1; i < 100_000_000; ++i) {
 			int a = CFun.sum_written_in_c(1, 2, 3);
 		}
+		
+		stopTime = System.currentTimeMillis();
+		
+		return startTime - stopTime;
 	}
 	
 	public static void test3 () {
@@ -55,7 +71,7 @@ public class PerfScript {
 			for (int j = 1; j < 100_000; ++j) {
 				strings.add("hello world");
 			}
-			System.out.println(i);
+//			System.out.println(i);
 		}
 	}
 	
@@ -75,9 +91,9 @@ public class PerfScript {
 //        
 //        System.out.println("Test 3 memory usage: " + memory/1024L + "kB");
         
-		long startTime;
-		long stopTime;
-		long elapsedTime;
+//		long startTime;
+//		long stopTime;
+//		long elapsedTime;
 		
         // Test 1
 		// Start timer
@@ -91,21 +107,25 @@ public class PerfScript {
 		
 //		elapsedTime = stopTime - startTime;
 //		System.out.println("Test 1 execution time: " + elapsedTime/1000f + "s");
+		long test1ElapsedTime = test1();
+		System.out.println("Test 1 execution time: " + test1ElapsedTime/1000f + "s");
 		
 		// Test 2
 //		System.out.println(System.getProperty("java.library.path"));
 		
 		// Start timer
-		startTime = System.currentTimeMillis();
+//		startTime = System.currentTimeMillis();
 		
-		test2();
+//		test2();
 		
 		// Stop timer
-		stopTime = System.currentTimeMillis();
+//		stopTime = System.currentTimeMillis();
 		// Calculate run time
-		elapsedTime = stopTime - startTime;
-		System.out.println("Test 2 execution time: " + elapsedTime/1000f + "s");
+//		elapsedTime = stopTime - startTime;
+//		System.out.println("Test 2 execution time: " + elapsedTime/1000f + "s");
+		long test2ElapsedTime = test2();
+		System.out.println("Test 2 execution time: " + test2ElapsedTime/1000f + "s");
 //		
-		System.out.print("stop");
+//		System.out.print("stop");
 	}
 }
