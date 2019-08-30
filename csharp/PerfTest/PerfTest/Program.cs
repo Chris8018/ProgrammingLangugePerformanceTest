@@ -110,7 +110,7 @@ namespace PerfTest
 
             // Test 1
 
-            test1();
+            //test1();
 
             // Test 2
 
@@ -118,7 +118,8 @@ namespace PerfTest
 
             // Test 3
 
-            test3();
+            //test3();
+            Console.WriteLine("Done");
         }
     }
 }

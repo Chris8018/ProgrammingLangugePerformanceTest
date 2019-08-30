@@ -2,6 +2,8 @@
 
 -- Test 1: Execution time test
 function test1()
+    local StartTime = os.clock()
+
     for i = 1, 100000 do
         for j = 1, 100 do
             local a = 5 * 5;
@@ -25,15 +27,32 @@ function test1()
             local b = a .. "world";
         end
     end
+
+    local EndTime = os.clock()
+
+    local ExeTime = EndTime - StartTime
+
+    print("Test 1 eplapsed time: " .. ExeTime)
 end
 
 -- Test 2: Execution time when calling C Function
 function test2()
+    local StartTime = os.clock()
+
+    -- Load clib.dll
     require("clib")
 
     for i = 1, 100000000 do
         local a = sum_written_in_c(1, 2, 3)
     end
+
+    local StartTime = os.clock()
+
+    local EndTime = os.clock()
+
+    local ExeTime = EndTime - StartTime
+
+    print("Test 2 eplapsed time: " .. ExeTime)
 end
 
 -- Test 3: Memory test
@@ -59,16 +78,10 @@ end
 -- Run test here
 
 -- Run test 3
-print("Test 3 Start")
-test3()
-print("Test 3 End")
+-- test3()
 
 -- Run test 1
-print("Test 1 Start")
 test1()
-print("Test 1 End")
 
 -- Run test 2
-print("Test 2 Start")
 test2()
-print("Test 2 End")
