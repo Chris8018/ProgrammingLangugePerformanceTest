@@ -39,6 +39,7 @@ end
 -- The different between this test 2 and the one in LuaJIT is the way C Func is used
 -- In Lua, C Func is used by sharing memory and the C Lib is compile with lua.h, lualib.h,etc
 -- In LuaJIT, C Func is used by LuaJIT's FFI and the C Lib is from C# project, basically native C code
+-- Have to run Manually since running with iterator cause some weird problem
 function test2()
     local StartTime = os.clock()
 
@@ -95,7 +96,7 @@ end
 -- test3()
 
 
-IteratorTime = 100
+IteratorTime = 1
 
 Reduce = function (n, list)
     for key, value in pairs(list) do
@@ -128,3 +129,5 @@ end
 ElapsedTime2 = Reduce(0, TimeList2) / IteratorTime
 
 print("Test 2 elapsed time: " .. ElapsedTime2 .. "s")
+
+-- os.exit(0)
