@@ -1,6 +1,7 @@
 .vscode/
 !clib.dll
 !profiler.dll
+!CLib.dll
 
 # Compiled Lua sources
 luac.out

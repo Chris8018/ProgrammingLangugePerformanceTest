@@ -40,12 +40,22 @@ end
 function test2()
     local StartTime = os.clock()
 
-    -- Load clib.dll
-    require("clib")
+    -- Loading FFI from LuaJit
+    local ffi = require "ffi"
 
-    for i = 1, 100000000 do
-        local a = sum_written_in_c(1, 2, 3)
-    end
+    -- Define C func
+    ffi.cdef[[
+        void greet();
+        int sum_written_in_c(double a, double b, double c);
+    ]]
+
+    -- Load dll
+    local dll = ffi.load("CLib.dll")
+
+    -- Test if work
+    dll.greet()
+
+    print(dll.sum_written_in_c(5, 10, 25))
 
     local EndTime = os.clock()
 
