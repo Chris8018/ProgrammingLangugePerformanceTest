@@ -1,6 +1,6 @@
 .vscode/
-!profiler.dll
-!CLib.dll
+# !profiler.dll
+# !CLib.dll
 
 # Compiled Lua sources
 luac.out
@@ -30,7 +30,7 @@ luac.out
 *.exp
 
 # Shared objects (inc. Windows DLLs)
-*.dll
+# *.dll
 *.so
 *.so.*
 *.dylib
@@ -45,5 +45,5 @@ luac.out
 
 *.out
 *.luac
-LuaProfiler/report/
+# LuaProfiler/report/
 

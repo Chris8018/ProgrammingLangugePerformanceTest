@@ -51,7 +51,6 @@ function test2()
 
     local ExeTime = EndTime - StartTime
 
-    print("End test 2")
     -- print("Test 2 eplapsed time: " .. ExeTime)
     return ExeTime
 end

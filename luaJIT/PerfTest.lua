@@ -32,11 +32,13 @@ function test1()
 
     local ExeTime = EndTime - StartTime
 
-    -- print("Test 1 eplapsed time: " .. ExeTime)
     return ExeTime
 end
 
 -- Test 2: Execution time when calling C Function
+-- The different between this test 2 and the one in LuaJIT is the way C Func is used
+-- In Lua, C Func is used by sharing memory and the C Lib is compile with lua.h, lualib.h,etc
+-- In LuaJIT, C Func is used by LuaJIT's FFI and the C Lib is from C# project, basically native C code
 function test2()
     local StartTime = os.clock()
 
@@ -53,16 +55,17 @@ function test2()
     local dll = ffi.load("CLib.dll")
 
     -- Test if work
-    dll.greet()
+    -- dll.greet()
 
-    print(dll.sum_written_in_c(5, 10, 25))
+    for i = 1, 100000000 do
+        local a = dll.sum_written_in_c(1, 2, 3)
+    end
+    
 
     local EndTime = os.clock()
 
     local ExeTime = EndTime - StartTime
 
-    print("End test 2")
-    -- print("Test 2 eplapsed time: " .. ExeTime)
     return ExeTime
 end
 
@@ -92,7 +95,7 @@ end
 -- test3()
 
 
-IteratorTime = 10
+IteratorTime = 100
 
 Reduce = function (n, list)
     for key, value in pairs(list) do
