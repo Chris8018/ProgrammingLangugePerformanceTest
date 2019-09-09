@@ -51,6 +51,7 @@ function test2()
 
     local ExeTime = EndTime - StartTime
 
+    print("End test 2")
     -- print("Test 2 eplapsed time: " .. ExeTime)
     return ExeTime
 end
@@ -81,7 +82,7 @@ end
 -- test3()
 
 
-IteratorTime = 100
+IteratorTime = 10
 
 Reduce = function (n, list)
     for key, value in pairs(list) do
@@ -103,7 +104,7 @@ ElapsedTime1 = Reduce(0, TimeList1) / IteratorTime
 print("Test 1 elapsed time: " .. ElapsedTime1 .. "s")
 
 -- Run test 2
--- test2()
+test2()
 
 TimeList2 = {}
 
