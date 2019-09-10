@@ -87,6 +87,7 @@ function test3()
         for j = 1, 100000 do
             strings[j] = j
         end
+		-- io.read()
     end
 end
 
@@ -94,6 +95,7 @@ end
 
 -- Run test 3
 -- test3()
+-- io.read()
 
 
 IteratorTime = 1
@@ -106,7 +108,6 @@ Reduce = function (n, list)
 end
 
 -- Run test 1
--- test1()
 TimeList1 = {}
 
 for i = 1, IteratorTime do
@@ -118,16 +119,12 @@ ElapsedTime1 = Reduce(0, TimeList1) / IteratorTime
 print("Test 1 elapsed time: " .. ElapsedTime1 .. "s")
 
 -- Run test 2
-test2()
+-- TimeList2 = {}
 
-TimeList2 = {}
+-- for i = 1, IteratorTime do
+    -- TimeList2[i] = test2()
+-- end
 
-for i = 1, IteratorTime do
-    TimeList2[i] = test2()
-end
+-- ElapsedTime2 = Reduce(0, TimeList2) / IteratorTime
 
-ElapsedTime2 = Reduce(0, TimeList2) / IteratorTime
-
-print("Test 2 elapsed time: " .. ElapsedTime2 .. "s")
-
--- os.exit(0)
+-- print("Test 2 elapsed time: " .. ElapsedTime2 .. "s")
