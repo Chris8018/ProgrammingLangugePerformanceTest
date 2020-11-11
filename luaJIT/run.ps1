@@ -7,7 +7,7 @@ function MilliSecToSec {
     $MilliSec / 1000
 }
 
-$iteratorTime = 20
+$iteratorTime = 1
 
 
 # Test 1

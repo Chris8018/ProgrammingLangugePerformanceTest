@@ -73,50 +73,49 @@ end
 -- Test 3: Memory test
 function test3()
     for i = 1, 2 do
-        local ints = {}
+        ints = {}
         for j = 1, 100000 do
             ints[j] = j
         end
 
-        local floats = {}
+        floats = {}
         for j = 1, 100000 do
             floats[j] = j
         end
 
-        local strings = {}
+        strings = {}
         for j = 1, 100000 do
             strings[j] = j
         end
-		-- io.read()
     end
 end
 
 -- Run test here
 
 -- Run test 3
--- test3()
+test3()
 -- io.read()
 
 
-IteratorTime = 1
+-- IteratorTime = 1
 
-Reduce = function (n, list)
-    for key, value in pairs(list) do
-        n = n + value
-    end
-    return n
-end
+-- Reduce = function (n, list)
+--     for key, value in pairs(list) do
+--         n = n + value
+--     end
+--     return n
+-- end
 
 -- Run test 1
-TimeList1 = {}
+-- TimeList1 = {}
 
-for i = 1, IteratorTime do
-    TimeList1[i] = test1()
-end
+-- for i = 1, IteratorTime do
+--     TimeList1[i] = test1()
+-- end
 
-ElapsedTime1 = Reduce(0, TimeList1) / IteratorTime
+-- ElapsedTime1 = Reduce(0, TimeList1) / IteratorTime
 
-print("Test 1 elapsed time: " .. ElapsedTime1 .. "s")
+-- print("Test 1 elapsed time: " .. ElapsedTime1 .. "s")
 
 -- Run test 2
 -- TimeList2 = {}
